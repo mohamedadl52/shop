@@ -1,5 +1,5 @@
 <template>
-            <div  :class=" news ? 'lg:w-1/6 w-1/2 ' : 'w-24'" class=" transition-all duration-700 bg-gray-600">
+            <div  :class=" news ? 'lg:w-1/6 w-1/2 ' : 'w-24'" class="transition-all duration-700 bg-gray-600"  >
   
   
   <!-- header of site -->
@@ -21,35 +21,15 @@
       </li>
       </router-link>
 
-      <router-link to="/admin">
-
-          <li class="p-2 ml-2 rounded-l-xl">
-              <div style="background-color: #DE5634" class="p-2 mx-2  rounded-xl transtion-all duration-1000 text-white text-center">
-                <span>
-                    <font-awesome-icon class="text-2xl" :icon="['fas', 'home']"></font-awesome-icon>
-                </span>
-                
-                <span :class=" news ? 'opacity-100' : 'opacity-0'" class="ml-1  font-bold transtion-all duration-1000 delay-300">Reports</span>
-            </div>
-        </li>
-    </router-link>
-      <li class="p-2 ml-2 rounded-l-xl">
-           <div style="background-color: #DE5634" class="p-2 mx-2   rounded-xl text-white text-center">
-            <span>
-          <font-awesome-icon class="text-2xl" :icon="['fas', 'home']"></font-awesome-icon>
-        </span>
-
-        <span :class=" news ? 'opacity-100' : 'opacity-0'" class="ml-1 font-bold transtion-all duration-1000 delay-300">setting</span>
-       </div>
-      </li>
-      <router-link to="/admin/customer">
+    
+      <router-link to="/admin/products">
       <li class="p-2 ml-2 rounded-l-xl">
            <div style="background-color: #DE5634" class="p-2 mx-2  rounded-xl text-white text-center">
             <span>
           <font-awesome-icon class="text-2xl pointer" :icon="['fas', 'user']"></font-awesome-icon>
         </span>
 
-        <span :class=" news ? 'opacity-100' : 'opacity-0'" class="ml-1 font-bold transtion-all duration-1000 delay-300 ">customers</span>
+        <span :class=" news ? 'opacity-100' : 'opacity-0'" class="ml-1 font-bold transtion-all duration-1000 delay-300 ">products</span>
        </div>
       </li>
       </router-link>

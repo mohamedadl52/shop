@@ -1,6 +1,6 @@
 <template>
    <div>
-    
+<!--     
 <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
     <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
         <button type="button" class="inline-flex flex-col items-center justify-center px-5 border-gray-200 border-x hover:bg-gray-50 dark:hover:bg-gray-800 group dark:border-gray-600">
@@ -29,7 +29,47 @@
             <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Profile</span>
         </button>
     </div>
+</div> -->
+
+<!-- <testPage>
+
+</testPage> -->
+
+<div>
+ <p>
+    <input class="bg-blue-500 text-xl p-2 px-4 mx-auto block w-32  mt-32 text-white " type="submit" value="get data" @click="getData">
+ </p>
+
 </div>
 
    </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+// import testPage from '@/components/testPage.vue';
+export default {
+    data :  function(){
+        return {
+            count : 1
+        } 
+    }, 
+    //  components:{
+    //     testPage
+    //  } , 
+     methods :{
+        testChange(value){
+        this.count =  value
+        } , 
+          getData(){
+    axios.get('https://rapiddns.io/s/104.24.0.0/14?page=50#result').then((res)=>{
+   console.log(res)
+    }).catch(err=>{
+        console.log(err)
+    })
+
+        }
+     }
+}
+</script>

@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>price</title>
+</head>
+<body>
+ <table dir="rtl" border="1">
+    <tr>
+        <td>المنتج </td>
+        <td>السعر </td>
+        <td> الكميه </td>
+        <td> سعر البيع </td>
+        <td> المتبقى</td>
+        <td> السعر بدون فايده </td>
+        <td>الفايدة</td>
+        <td> الفايدة الكلية </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>منتج </td>
+        <td> <input type="text" id="p">    </td>
+        <td> <input type="text" id="km">   </td>
+        <td> <input type="text" id="pb">   </td>
+        <td> <input type="text" id="m">   </td>
+        <td id="pf"> </td>
+        <td id="f"> </td>
+        <td id="tf"> </td>
+        <td id="calc"> calc</td>
+    </tr>
+    
+ </table>
+</body>
+<script>
+let p = document.getElementById('p')
+let km = document.getElementById('km')
+let pf = document.getElementById('pf')
+let f = document.getElementById('f')
+let m = document.getElementById('m')
+let tf = document.getElementById('tf')
+let calc = document.getElementById('calc')
+let pb = document.getElementById('pb')
+
+calc.onclick = function(){
+    pf.innerText = ( p.value / km.value ) *  m.value       
+    f.innerText =  pb.value - ( p.value / km.value ) 
+    tf.innerText = f.innerText * m.value  
+}
+
+</script>
+</html>

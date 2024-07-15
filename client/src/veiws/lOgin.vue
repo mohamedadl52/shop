@@ -1,66 +1,36 @@
 <template>
-  <div
-    class="min-h-screen bg-gray-800 py-6 flex flex-col justify-center sm:py-12"
-  >
-    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-      <div
-        class="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"
-      ></div>
-      <div
-        class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20"
-      >
-        <div class="max-w-md mx-auto">
-          <div>
-            <h1 class="text-2xl font-semibold">login in</h1>
-          </div>
-          <div class="divide-y divide-gray-200">
-            <div
-              class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
-            >
-              <div class="relative">
-                <input
-                  v-model="user.username"
-                  autocomplete="off"
-                  name="email"
-                  type="text"
-                  class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                  placeholder="Email address"
-                />
-                <label
-                  for="email"
-                  class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >Email</label
-                >
-              </div>
-              <div class="relative">
-                <input
-                  v-model="user.password"
-                  autocomplete="off"
-                  name="password"
-                  type="password"
-                  class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                  placeholder="Password"
-                />
-                <label
-                  for="password"
-                  class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >password</label
-                >
-              </div>
-              <div class="relative">
-                <button class="bg-blue-500 text-white rounded-md px-2 py-1" @click="handleLogin(user)">
-                  دخول
-                </button>
-              </div>
-              <div v-if="message" class="text-red-500" >
-            {{ message }}
-               </div>
+   <div class="animation3 ">
+                    <section class="relative top-0 flex min-h-screen items-center justify-center">
+                      <div class="color "></div>
+                      <div class="color"></div>
+                      <div class="color"></div>
+                      <div class="box relative ">
+                        <div class="squre" style="--i :0;"></div>
+                        <div class="squre" style="--i :1;"></div>
+                        <div class="squre" style="--i :2;"></div>
+                        <div class="squre" style="--i :3;"></div>
+                        <div class="squre" style="--i :4;"></div>
+                             <div class="form px-10">
+                                <form action="" >
+                                <h2>صفحة تسجيل الدخول</h2>
+                                     <div class="inputBox">
+                                         <input placeholder="username" type="text" v-model="user.username">
+                                     </div>
+                                     <div class="inputBox">
+                                         <input placeholder="password" type="password" v-model="user.password" >
+                                     </div>
+                                     <div class="inputBox">
+                                         <input type="submit" @click.prevent="handleLogin(user)" class="font-semibold cursor-pointer" value="login In" >
+                                     </div>
+                                     <p class="inputBox bg-maincolor py-2 w-full text-center lg:text-gray-800"><router-link to="/signup" class=" w-full text-white  p-2 "> تسجيل جديد</router-link></p>
+                                   
+                                </form>
+                             </div>
+                      </div>
+                    </section>
+                
+            
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 
@@ -87,16 +57,16 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/admin");
     }
   },
   methods: {
     handleLogin(user) {
       this.loading = true;
-
+  
       this.$store.dispatch("auth/login", user).then(
         () => {
-          this.$router.push("/profile");
+          this.$router.push("/admin");
         },
         (error) => {
           this.loading = false;
@@ -112,3 +82,122 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+
+   
+   section {
+     background: linear-gradient(to bottom , #631e15 , #f04848) ;
+     overflow: hidden
+    }
+    .color {
+      @apply absolute  ;
+      filter:  blur(150px);
+     
+     }
+     .color:nth-child(1){
+       top:-350px ;
+        width : 600px ;
+        height : 600px ;
+        background: #0a0206; 
+      } 
+
+      .color:nth-child(2){
+       left:100px ;
+       bottom: -150px ; 
+        width : 500px ;
+        height : 500px ;
+        background: #0f0f0a; 
+      } 
+      .color:nth-child(3){
+       right:50px ;
+       bottom:50px ;
+        width : 300px ;
+        height : 300px ;
+        background: #02151a; 
+      }
+    
+    .box .squre {
+       @apply absolute    rounded-2xl;
+      background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        box-shadow: 0px 25px 45px  rgba(0, 0, 0, 0.1) ;
+      border: 1px solid rgba(255, 255, 255, 0.5) ;
+      border-right: 1px solid rgba(255, 255, 255, 0.2) ;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2) ;
+      animation : animate 5s linear infinite;
+      animation-delay: calc(-1s * var(--i) );
+      
+     }
+     .box .squre:nth-child(1){
+       @apply w-20 h-20 -top-11 right-14 lg:-right-14
+     }
+     .box .squre:nth-child(2){
+       @apply w-24 h-24 top-24 -left-24
+     }
+     .box .squre:nth-child(3){
+       @apply w-24 h-24 bottom-11 -right-14
+     }
+     .box .squre:nth-child(4){
+       @apply w-20 h-20 -top-12 left-8
+     }
+
+@keyframes animate {
+    0% , 100% {
+  transform: translateY(40px)
+    }
+    50% {
+      transform: translateY(0px)
+
+    }
+}
+    .box .form {
+      @apply flex justify-center items-center rounded-3xl border  ;
+      backdrop-filter: blur(4px);
+      width: 400px;
+      min-height: 400px;
+        box-shadow: 0px 25px 45px  rgba(0, 0, 0, 0.1) ;
+      border: 1px solid rgba(255, 255, 255, 0.5) ;
+      border-right: 1px solid rgba(255, 255, 255, 0.2) ;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2) ;
+      background: rgba(255, 255, 255, 0.1);
+     } 
+     .box .form form{
+     @apply w-full h-full relative p-10 ; 
+   }
+   .box .form form h2 {
+     @apply text-white relative text-2xl  font-semibold tracking-wider mb-10 ;
+   }
+   
+   .box .form form h2::before {
+     width: 80px ;
+     height : 4px ;
+     content : "";
+     position : absolute ;
+     bottom : -10px ;
+     left : 0px ;
+     background: white; 
+
+     
+   }
+   .box .form form .inputBox {
+@apply w-full mb-5 ;
+
+}
+.box .form form .inputBox input {
+    @apply w-full border-none outline-none rounded-3xl px-5 py-2 ;
+    background-color: rgba(255, 255, 255, 0.5);
+    
+     border: 1px solid rgba(255, 255, 255, 0.5) ;
+     border-right: 1px solid rgba(255, 255, 255, 0.2) ;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.2) ;
+    
+   }
+   .box .form form .inputBox input::placeholder{
+    color: white;
+   }
+    
+
+ 
+ 
+</style>

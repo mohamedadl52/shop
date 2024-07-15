@@ -6,33 +6,38 @@
        
        <div  class="flex flex-col container justify-between lg:flex-row">
            <div class="mx-2 ml-5 lg:mt-64">
-               <h1 style="color:rgb(19, 255, 255)" class="text-white lg:text-3xl  uppercase text-2xl  text-bold ">We are Web DEvelpoer</h1>
-               <h1 style="color:rgb(255, 255, 255)" class="text-white   uppercase text-lg  text-bold ">make your jobs with hight quality</h1>
-               <button style="border: 1px solid blueviolet; border-radius: 10px;" class="text-white   uppercase text-lg p-2 mt-4 w-64  text-bold">
-                Hair us
+               <h1 style="color:rgb(19, 255, 255)" class="text-white lg:text-3xl  uppercase text-2xl  text-bold ">furnture store</h1>
+               <h1 style="color:rgb(255, 255, 255)" class="text-white   uppercase text-lg  text-bold ">order now and you will get you product in time </h1>
+                <router-link to="/shop">
+                    <button style="border: 1px solid blueviolet; border-radius: 10px;" class="text-white   uppercase text-lg p-2 mt-4 w-64  text-bold">
+                shop Now 
                </button>
+                </router-link>     
             </div>
             <div  class="lg:w-1/2">
-                <img  class="imfly" height="20px" src="../assets//images//2.png" alt="">
 
             </div>
         </div>
     </div>
-    <div data-aos="zoom-out-up"
-    class="mb-20" >
-  <p class="bg-blue-400 text-center mb-10  mt-10 w-32 rounded-r-lg  text-2xl text-white p-2">our skills</p>
- <div  v-for="item in values " :key="item.name">
-   
-    <span class="ml-4 lg:ml-12 text-xl text-blue-500">{{item.name}}</span>
-  <div class="flex mx-2">
-    <div class="h-4   w-11/12 lg:w-1/2 bg-neutral-200 lg:ml-10 dark:bg-neutral-600">
-  <div class="h-4 bg-green-600 bg-primary" :style="{width: item.value + '%' , background : item.color}">  </div>
-  </div>
-  <p class="text-red-500 mx-0 leading-4 text-xl ml-2" :style="{color  :  item.color}">    {{ item.value }}%
-</p>
-  </div>
-  <br>
- </div>
+    <div 
+    class="mb-20 container mx-auto" >
+        <div data-aos="zoom-out-up" class="mt-20">
+                <h1 class="text-2xl px-5 font-bold text-maincolor ">last product  ></h1>
+
+              <div class="flex gap-4 mt-2 flex-wrap justify-center">
+                <prodduct v-for="item in carditem"  :key="item.id" :name="item.name" :price="item.price"  />
+              </div>
+               
+        </div>
+        <div data-aos="zoom-out-up" class="mt-20">
+                <h1 class="text-2xl px-5 font-bold text-maincolor ">top product  ></h1>
+
+              <div class="flex gap-4 mt-2 flex-wrap justify-center">
+                <prodduct v-for="item in carditem"  :key="item.id" :name="item.name" :price="item.price"  />
+              </div>
+               
+        </div>
+        
 
     </div>
    </div>
@@ -40,25 +45,22 @@
 
 <script>
 import AOS from 'aos'
-import { onMounted } from 'vue'
+import prodduct from '../components/carD.vue'
+import { onMounted  } from 'vue'
 export default {
+    components :{
+        prodduct
+    } ,
   
     data(){
         return {
-        values : [
-            {name  :  'html' , value  :   90 , color  :   '#7486748'} ,
-            {name  :  'css' , value  :   70 , color  :   '#748'} ,
-            {name  :  'js' , value  :   80 , color  :   '#a48'} ,
-            {name  :  'tailwind css' , value  :   70 , color  :   '#c48'} ,
-            {name  :  'bootstrap' , value  :   90 , color  :   '#774'} ,
-            {name  :  'nodejs' , value  :   80 , color  :   '#748'} ,
-            {name  :  'python' , value  :   60 , color  :   '#a54'} ,
-            {name  :  'c++' , value  :   50 , color  :   '#a88'} 
-
-
-            
-
-        ]
+       
+     carditem : [
+  {id :1 ,  name : 'product1' , price :50 } , 
+  {id :2 ,  name : 'product2' , price :500 } , 
+  {id :3 ,  name : 'product3' , price :60 } , 
+  {id :2 ,  name : 'product2' , price :500 } 
+] 
         }
     } ,
     setup(){
@@ -76,6 +78,7 @@ export default {
 }
 .background {
   background-image: url("../src/assets/images/key7.jpg");
+ filter  :   hue-rotate(-194deg) ; 
   background-size: cover;
   width: 100%;
   height: 85vh;
@@ -88,6 +91,7 @@ export default {
 50% {
     
     transform: translateY(0px);
+
 }
 100%{
     

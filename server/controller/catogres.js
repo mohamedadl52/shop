@@ -34,3 +34,12 @@ exports.deleteCatogress  =  async(req , res)=>{
      console.log(err)
     })
 }
+exports.updateCatogress  =  async(req , res)=>{
+ 
+ const catogress = await Catogres.findByIdAndUpdate(req.params.id , {type :  req.body.type}).then((Catogress)=>{
+     console.log(req.param.id)
+ res.json('updated scssesfull')
+    }).catch((err)=>{
+     console.log(err)
+    })
+}

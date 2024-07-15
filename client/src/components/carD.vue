@@ -1,7 +1,7 @@
 <template>
-     <div class="w-64  relative">
-    <img src="src/assets/images/bg.jpg" class="w-full h-48" alt="">
-    <div class="w-full bgwork2 flex justify-center  items-center h-48 absolute top-0 left-0 " >  
+     <div class=" w-64 shadow-2xl relative">
+    <img :src="'/src/assets/uploads/'+ productImg" class="w-full h-48" alt="">
+    <div class="w-full  bgwork2 flex justify-center  items-center h-48 absolute top-0 left-0 " >  
       <div class="absolute  iconspage top-1/2 left-1/3">
       <a href="#jbdv">
         <font-awesome-icon
@@ -17,7 +17,7 @@
                     mx-2
                     cursor-pointer
                   "
-                  :icon="['fas', 'user-plus']"
+                  :icon="['fas', 'cart-plus']"
                 />
       </a>
                 <font-awesome-icon
@@ -26,20 +26,38 @@
                     bg-maincolor
                     p-2
                     rounded-full
-                    hover:text-gray-600
+                    hover:text-red-600
                     transition-all
                     duration-500
                     text-xl
                     mx-2
                     cursor-pointer
                   "
-                  :icon="['fas', 'user-plus']"
+                  :icon="['fas', 'heart']"
                 />
     </div>
     </div>
-     <div>
-      <p   class="text-xl font-bold text-seconcolor ">{{ name }}</p>
-      <p><span class="text-maincolor text-lg font-bold">${{price}} </span><i class="text line-through ml-4">$500</i></p>
+     <div class="px-2 py-1">
+      <div class="flex justify-between mt-2">
+        
+        <font-awesome-icon
+                    class="
+                    text-white
+                      bg-maincolor
+                      p-2
+                      rounded-full
+                      hover:text-red-600
+                      transition-all
+                      duration-500
+                      text-xl
+                      mx-2
+                      cursor-pointer
+                    "
+                    :icon="['fas', 'heart']"
+                  />
+      <p   class="text-lg font-bold text-seconcolor ">{{ title }}</p>
+      </div>
+      <p class="text-center"><span class="text-maincolor text-2xl font-bold">${{price}} </span></p>
        <p> 
         <font-awesome-icon
                   class="
@@ -99,7 +117,9 @@
                 />
               
           <span class="text-lg ml-2 text-seconcolor ">(150)</span>
-              </p> 
+             
+            <a :href="'/viewProduct/' + idProduct" class="text-blue-500 ml-4 font-bold text-lg">تفاصيل</a>
+        </p> 
               <p class="text-white bg-maincolor p-2 text-center font-bold px-4">Add to cart</p>
         
     </div>
@@ -109,12 +129,24 @@
 <script>
 export default {
     props: {
-        name : {
+        title : {
+          type :String , 
+          default : ''
+        }, 
+        productImg : {
           type :String , 
           default : ''
         }, 
         price : {
           type : Number , 
+          default : null
+        } , 
+        card : {
+          type : String , 
+          default : null
+        } ,
+        idProduct : {
+          type : String , 
           default : null
         }
     }

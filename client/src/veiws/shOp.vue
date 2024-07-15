@@ -74,7 +74,7 @@
      <div class="w-full">
             <div class="flex justify-between w-full items-center ">
                  <div>
-                    <select class="border border-seconcolor p-2 px-10 text-left">
+                    <select class="border bg-maincolor text-white border-seconcolor p-2 px-5 font-semibold text-left">
                         <option value="sam">sofa</option>
                         <option value="bd">bad room</option>
                         <option value="sol">sol</option>
@@ -82,38 +82,56 @@
                  </div>
                  <div>
                     <font-awesome-icon
-          class="text-white bg-maincolor p-2 hover:text-gray-600 transition-all  duration-500 text-2xl mx-2"
+          class="text-white bg-maincolor lg:hidden p-2 hover:text-gray-600 transition-all  duration-500 text-2xl mx-2"
           :icon="['fas', 'bars']"
           @click="hidecat =! hidecat"
         />
+           
                     <font-awesome-icon
-          class="text-white hidden lg:inline  bg-maincolor p-2 hover:text-gray-600 transition-all duration-500 text-2xl mx-2"
+          class="text-white hidden lg:inline  bg-maincolor p-2  transition-all duration-500 text-2xl mx-2"
           :icon="['fas', 'bars']"
+          @click="card =! card"
+          :class="card ? 'lg:inline animationCard' : 'lg:hidden animationCard2'"
+
+        />
+           
+                    <font-awesome-icon
+
+          class="text-white hidden lg:inline  bg-maincolor p-2  transition-all duration-500 text-2xl mx-2"
+          :icon="['fas', 'home']"
+          @click="card =! card"
+          :class="card ? 'lg:hidden animationCard' : 'lg:inline animationCard2'"
         />
                  </div>
 
             </div>
-              <div class="flex gap-4 mt-2 flex-wrap justify-center">
-                <Card v-for="item in carditem"  :key="item.id" :name="item.name" :price="item.price" /> 
+              <div :class="card ? 'flex-row animationCard' : 'flex-col animationCard2'" class="flex gap-4 flex-row transition-all duration-500 items-center  mt-2 flex-wrap justify-center  ">
+             
+                  <Card   :card="card" v-for="item in carditem" :productImg ='item.img_url' :idProduct="item._id"  :key="item.id" :title="item.title" :price="item.price" /> 
+             
               </div>
      </div>
 </div>
     </div>
 </template>
 <script setup>
+// import AOS from 'aos'
 
-import {ref} from 'vue'
+
+import {ref , onMounted} from 'vue'
 import Card from '../components/carD.vue';
-let carditem = ref([
-  {id :1 ,  name : 'product1' , price :50 } , 
-  {id :2 ,  name : 'product2' , price :500 } , 
-  {id :3 ,  name : 'product3' , price :60 } , 
-  {id :2 ,  name : 'product2' , price :500 } , 
-  {id :3 ,  name : 'product3' , price :60 } , 
-  {id :2 ,  name : 'product2' , price :500 } , 
-  {id :3 ,  name : 'product3' , price :60 }  
-  
-])
+import store from '../store/index'
+let carditem = ref([])
+
+let getProduct = ()=>{
+  store.dispatch('product/get').then((res)=>{
+             carditem.value = res
+         })
+}
+onMounted(()=>{
+ getProduct()
+})
+let card = ref(true)
 
 let hidecat = ref(false)
 </script>
@@ -125,5 +143,36 @@ let hidecat = ref(false)
 }
 .catogress ul li  {
     @apply text-lg whitespace-nowrap
+}
+.animationCard  { 
+     animation: test 2s 1;
+}
+.animationCard2  { 
+     animation: test2 2s 1;
+}
+
+@keyframes test {
+  0%{
+  /* transform: translateX(0px); */
+  opacity: 0;
+}
+
+100%{
+  
+  /* transform: translateX(0px); */
+  opacity: 1;
+  }
+}
+@keyframes test2 {
+  0%{
+  /* transform: translateX(0px); */
+  opacity: 0;
+}
+
+100%{
+  
+  /* transform: translateX(0px); */
+  opacity: 1;
+  }
 }
 </style>

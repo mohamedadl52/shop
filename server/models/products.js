@@ -13,15 +13,15 @@ const ProductEscema = new mongoose.Schema({
         type : Date , 
         default : Date.now
     },
-    user :  {type : mongoose.Schema.Types.ObjectId , ref : "user"}  ,
+    // user :  {type : mongoose.Schema.Types.ObjectId , ref : "user"}  ,
    catogres :  {type : mongoose.Schema.Types.ObjectId , ref : "catogres"} , 
    updatedAt : {
         type : Date , 
         default : Date.now
     } , 
     description : String , 
-    rating : [Number] , 
-    Owner : {type : mongoose.Schema.Types.ObjectId , ref : "Owner"}
+    rating :{ type: Number , default : 0} , 
+    // Owner : {type : mongoose.Schema.Types.ObjectId , ref : "Owner"}
 })
 
 

@@ -8,6 +8,7 @@
           <!-- end aside left part  -->
         
              <!-- start right aside  -->
+
                       <div  class="w-full" style="background-color : #22222F">
                           <div class="bars ml-4 mt-2" @click="news =! news">
                               <div class="w-10 h-1 bg-white  my-1"></div>
@@ -23,48 +24,27 @@
                                             <option value="">admin</option>
                                          </select>
                                     </div>
+                                    <div class="p-2 bg-cyan-900 text-white w-32 ml-10 mt-10 text-center cursor-pointer"><router-link to="product/add">add product</router-link></div>
                                         <table border="1" class="text-white text-center  border-2 w-1/2 mx-auto font-semibold  mt-10  ml-10">
-                                           <tr class="border-2 bg-gray-500">
-                                            <td class="border-2">id</td>
-                                            <td class="border-2">name</td>
-                                            <td class="border-2">post</td>
-                                            <td class="border-2">role</td>
-                                            <td class="border-2"></td>
-                                           </tr>
+                                           
                                            <tbody>
-                                            <tr>
-                                                <td class="border-2">1</td>
-                                                <td class="border-2">phone</td>
-                                                <td class="border-2">5</td>
-                                                <td class="border-2">user</td>
-                                                <td class="border-2"><span class="text-red-500">delete </span>/ <span class="text-green-500">edit</span> / <span class="text-orange-400">veiw
-                                                </span></td>
+                                            <tr v-for="product in products" :key="product.id">
+                                                <td class="border-2 flex gap-2 items-center">
+                                                    <img v-if="product.img_url" class="w-20" :src="'/src/assets/uploads/'+ product.img_url" alt="">
+                                                    
+                                                    {{product.title}}</td>
+                                           
+                                                <td class="border-2"><span @click="deleteProduct(product._id , product.catogres)" class="text-red-500 cursor-pointer">delete </span>/ <span class="text-green-500 cursor-pointer"><router-link :to="'/admin/product/update/'+product._id">edit</router-link></span> / <router-link :to="'/viewProduct/'+product._id" class="text-orange-400">veiw
+                                                </router-link></td>
                                             </tr>
-                                            <tr>
-                                                <td class="border-2">1</td>
-                                                <td class="border-2">pc</td>
-                                                <td class="border-2">5</td>
-                                                <td class="border-2">mod</td>
-                                                <td class="border-2"><span class="text-red-500">delete </span>/ <span class="text-green-500">edit</span> / <span class="text-orange-400">veiw
-                                                </span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="border-2">1</td>
-                                                <td class="border-2">tvs</td>
-                                                <td class="border-2">5</td>
-                                                <td class="border-2">admin
-                                                </td>
-                                                <td class="border-2"><span class="text-red-500">delete </span>/ <span class="text-green-500">edit</span> / <span class="text-orange-400">veiw
-                                                </span></td>
-                                            </tr>
+                                         
                                            </tbody>
                                         </table>
 
                                  </div>
                       </div>
 
-                      <div
-id="model" :class="modelV ? 'hidden' :'flex' " class="absolute w-1/2 h-1/2 flex justify-center items-center top-1/4 left-1/4 shadow-xl  bg-white
+                      <div id="model" :class="modelV ? 'hidden' :'flex' " class="absolute w-1/2 h-1/2 flex justify-center items-center top-1/4 left-1/4 shadow-xl  bg-white
                       ">
                         <span class="absolute cursor-pointer right-3 top-1 text-2xl" @click="modelV = true">X</span>
                             <div class="w-full flex justify-center items-center flex-col p-2">
@@ -82,8 +62,8 @@ type="submit" value="add" class="bg-maincolor text-white font-semibold
   </template>
   
   <script>
-  import navbar from "/src/components/admin/navBar.vue";
- 
+import store from '../../store';
+import navbar from "/src/components/admin/navBar.vue";
 export default {
 components : {
     navbar
@@ -92,10 +72,25 @@ components : {
         return{
             news : true ,
             cat : true ,
-            modelV : true
+            modelV : true , 
+            products : null
+    } }, 
+    methods : {
+        getProduct(){
+         store.dispatch('product/get').then((res)=>{
+             this.products = res
+         })
+        }, 
+        deleteProduct(product , catogress){
+         store.dispatch('product/delete' , {product , catogress}).then(()=>{
+            this.getProduct()
+         })
+        } 
+    } ,
+    created(){
+        this.getProduct()
     }
 } 
-}
   </script>
 
 <style scoped>
