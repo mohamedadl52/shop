@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mohamedadl52/shop1.git"
+    "url": "git+https://github.com/mohamedadl52/shop.git"
   },
   "dependencies": {
     "@egjs/vue3-flicking": "^4.3.0",

@@ -22,14 +22,19 @@ app.use(function (req, res, next) {
   
     next()
 });
-// mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
-mongoose.connect(`mongodb://localhost:27017/test2`, {
+app.get("/", (req , res) =>{
+   res.send('ghjfghyfgh')
+} )
+mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
+// mongoose.connect(`mongodb://localhost:27017/test2`, {
+  
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
   console.log("Successfully connect to MongoDB");
   initial()
 })
+
 .catch(err => {
   console.error("Connection error", err);
   process.exit();
