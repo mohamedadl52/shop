@@ -6,7 +6,13 @@ const faker = require("faker")
 const cloudinary = require('cloudinary').v2
 var axios = require("axios").default;
 var catogress  =  require('../config/control.catogress')
+// var ImageKit = require("imagekit");
 
+// let imageKit = new ImageKit({
+//   publicKey : "public_hZ/JvPqU+rs3EP/MZhS9NTXbey8=",
+//   privateKey : "private_88hk+hLT8plIFeicsVF8aryjbhc=",
+//   urlEndpoint : "https://ik.imagekit.io/rtibtwyp6t"
+// });
 exports.getProduct = (req, res) =>{
 
 // axios.get('https://ipwhois.app/json/').then(function (response) {
@@ -34,7 +40,7 @@ exports.getOneProduct = (req, res) =>{
 const products =  Product.findById(req.params.id , function (err, doc) {
   
   res.json(doc)
-
+  
 })
 }
 exports.create = (req, res) => {
@@ -47,35 +53,56 @@ exports.create = (req, res) => {
       description : req.body.description , 
       qyt : req.body.qyt  
         });
-  
-    // Save Tutorial in the database
-    // catogress.find({ type : req.body.catogres }).then((res)=>{
-    //        return catogress.findById(req.body.catogres).then((product)=>{
-    //       return  catogress.findByIdAndUpdate(product.id , {Number :  product.Number + 1 })
+
+        
+        
+        // Save Tutorial in the database
+        // catogress.find({ type : req.body.catogres }).then((res)=>{
+          //        return catogress.findById(req.body.catogres).then((product)=>{
+            //       return  catogress.findByIdAndUpdate(product.id , {Number :  product.Number + 1 })
             
-    //        }).catch(err=> console.log(err))
-
-    // }).catch(err=>{
-    //   console.log(err)
-    // })
-
-    catogress.updateCatogress(req)
-
-    ProductrData.save()
-
-    .then(()=>{
-
-      // cloudinary.config({ 
-      //   cloud_name: 'dekh1kgki', 
-      //   api_key: '719669252214716', 
-      //   api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
-      //   secure: true
-      // })
-
-      console.log(req.file)
-
-      // cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
-
+            //        }).catch(err=> console.log(err))
+            
+            // }).catch(err=>{
+              //   console.log(err)
+              // })
+              
+              catogress.updateCatogress(req)
+              
+              ProductrData.save()
+              
+              .then(()=>{
+                
+                cloudinary.config({ 
+                            
+                          cloud_name: 'dekh1kgki', 
+                          api_key: '719669252214716', 
+                          api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
+                          secure: true
+                        })
+                        
+                        // console.log(req.file.path)
+                        
+                        // imageKit.url({
+                        //   path : req.file.path,
+                        //   urlEndpoint : "https://ik.imagekit.io/rtibtwyp6t/",
+                        //   transformation : [{
+                        //       "height" : "300",
+                        //       "width" : "400"
+                        //   }]
+                        // });
+                      
+                      // console.log(req.file.filename)
+      // imageKit.upload({
+      //   file: req.file,
+      //   fileName: req.file.filename,   //required
+      
+      // }, function(error, result) {
+      //   if(error) console.log(error);
+      //   else console.log(result);
+      // });
+                        cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+                        
     }).then(data => {
 
       return res.json(data)
