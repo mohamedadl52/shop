@@ -5,13 +5,6 @@ const path = require('path')
 
 // SDK initialization
 
-// var ImageKit = require("imagekit");
-
-// var imagekit = new ImageKit({
-//     publicKey : "public_hZ/JvPqU+rs3EP/MZhS9NTXbey8=",
-//     privateKey : "private_88hk+hLT8p******************",
-//     urlEndpoint : "https://ik.imagekit.io/rtibtwyp6t"
-// });
 
 const storage = multer.diskStorage({destination : (req,file, cb)=>{
 
@@ -29,14 +22,6 @@ var upload = multer({
         cb(null, true);
 
         
-        // var imageURL = imagekit.url({
-        //   path : "",
-        //   urlEndpoint : "https://ik.imagekit.io/rtibtwyp6t/nodetest",
-        //   transformation : [{
-        //       "height" : "300",
-        //       "width" : "400"
-        //   }]
-        // });
     } else {
       cb(null, false);
       return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
