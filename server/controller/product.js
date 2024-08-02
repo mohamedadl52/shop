@@ -151,6 +151,17 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.img_url =   req.file.filename 
     product.catogres =   req.body.catogres 
    
+    
+    cloudinary.config({ 
+                            
+      cloud_name: 'dekh1kgki', 
+      api_key: '719669252214716', 
+      api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
+      secure: true
+    })
+    
+    cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+    
     res.json(product)
   
   }).catch(err=>{
