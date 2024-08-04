@@ -93,7 +93,6 @@ exports.create = (req, res) => {
                           secure: true
                         })
                         
-                        // console.log(req.file.path)
                         
                         // imageKit.url({
                         //   path : req.file.path,
