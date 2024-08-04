@@ -52,7 +52,7 @@ exports.filterProduct  = (req, res)=>{
 
     const filterProduct = async ()=>{
   
-    const cat = await Catogres.findOne({type :req.params.cat})
+    const cat = await Catogres.findOne({_id :req.params.cat})
      console.log(cat)
      let prro = await products.find({catogres : cat._id})
   
