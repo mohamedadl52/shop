@@ -56,7 +56,7 @@ const products =  Product.findById(req.params.id , function (err, doc) {
 })
 }
 exports.create = (req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     const ProductrData = new Product({
       title :     req.body.title ,
       img_url :   req.file.filename ,
@@ -85,13 +85,13 @@ exports.create = (req, res) => {
               
               .then(()=>{
                 
-                cloudinary.config({ 
+                // cloudinary.config({ 
                             
-                          cloud_name: 'dekh1kgki', 
-                          api_key: '719669252214716', 
-                          api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
-                          secure: true
-                        })
+                //           cloud_name: 'dekh1kgki', 
+                //           api_key: '719669252214716', 
+                //           api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
+                //           secure: true
+                //         })
                         
                         
                         // imageKit.url({
@@ -112,8 +112,8 @@ exports.create = (req, res) => {
       //   if(error) console.log(error);
       //   else console.log(result);
       // });
-                        cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
-                        
+                        // cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+          console.log('good')              
     }).then(data => {
 
       return res.json(data)
