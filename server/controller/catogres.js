@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Catogres = require("../models/catogres")
+const products = require("../models/products")
 
 
 exports.addCatogress  =  async(req , res)=>{
@@ -43,3 +44,23 @@ exports.updateCatogress  =  async(req , res)=>{
      console.log(err)
     })
 }
+
+
+
+exports.filterProduct  = (req, res)=>{
+ console.log(req.params.cat)
+
+    const filterProduct = async ()=>{
+  
+    const cat = await Catogres.findOne({type :req.params.cat})
+     console.log(cat)
+     let prro = await products.find({catogres : cat._id})
+  
+     return prro
+    
+  }
+  filterProduct().then(pro=>{
+   res.json(pro)
+  })
+  
+  }

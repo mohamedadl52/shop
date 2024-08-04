@@ -25,8 +25,8 @@ app.use(function (req, res, next) {
 app.get("/", (req , res) =>{
    res.send('ghjfghyfgh')
 } )
-mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
-// mongoose.connect(`mongodb://localhost:27017/test2`, {
+// mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
+mongoose.connect(`mongodb://localhost:27017/test2`, {
   
   useNewUrlParser: true,
   useUnifiedTopology: true

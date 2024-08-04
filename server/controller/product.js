@@ -1,6 +1,7 @@
 const { json } = require('body-parser');
 const mongoose = require('mongoose');
 const Product = require("../models/products")
+const catogresss = require("../models/catogres")
 const user = require("../models/user")
 const faker = require("faker")
 const cloudinary = require('cloudinary').v2
@@ -21,17 +22,28 @@ exports.getProduct = (req, res) =>{
 //      console.error("error");
 //   })
 
-Product.find({})
+// const filterProduct = async ()=>{
 
-.populate("catogres")
+//   const cat = await catogresss.findOne({type :'خدمات الكترونيه'})
+//   //  console.log(cat._id)
+//    let prro = await Product.find({catogres : cat._id})
 
-  .exec((err, user) => {
+//    return prro
+  
+// }
+// filterProduct().then(pro=>{
+//   console.log(pro)
+// })
+ Product.find({})
 
-    res.json(user)
-
+.populate({
+  path :  "catogres" }).exec(function(err,orders) {
+    // populated and filtered twice
+    res.json(orders)
     console.log(err)
-
-  }) 
+    }
+    )
+   
 
 }
 
@@ -169,5 +181,22 @@ return Product.findByIdAndUpdate(req.params.id, {
     res.json(err)
   
   })
+
+}
+
+exports.filterProduct  = (req, res)=>{
+
+  const filterProduct = async ()=>{
+
+  const cat = await catogresss.findOne({type :req.body.catogry})
+  //  console.log(cat._id)
+   let prro = await Product.find({catogres : cat._id})
+
+   return prro
+  
+}
+filterProduct().then(pro=>{
+  console.log(pro)
+})
 
 }
