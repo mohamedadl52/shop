@@ -63,7 +63,7 @@ const products =  Product.findById(req.params.id , function (err, doc) {
 })
 }
 exports.create = (req, res) => {
-    console.log(req.body)
+    console.log(req.file)
     const ProductrData = new Product({
       title :     req.body.title ,
       img_url :   req.file.filename ,
