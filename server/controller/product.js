@@ -116,7 +116,7 @@ exports.create = (req, res) => {
       //   else console.log(result);
       // });
                 req.files.map(file => {
-            return cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+            return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
                   
                });
                       
