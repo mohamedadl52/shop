@@ -8,7 +8,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({destination : (req,file, cb)=>{
 
-  cb(null , __dirname + '../../../client/src/assets/uploads')
+  cb(null , __dirname + './uploads')
 } , filename :(req,file,cb)=>{
     const fileName =  Date.now() + file.originalname.toLowerCase().split(' ').join('-');
     cb(null, fileName)
@@ -33,7 +33,7 @@ var upload = multer({
     router.put('/updateProduct/:id', upload.single('fileImg') , UserConroller.updateProduct )
     router.get('/:id', UserConroller.getOneProduct )
     router.delete('/:id', UserConroller.deleteOneProduct )
-    router.post('/', UserConroller.create )
+    router.post('/',upload.single('fileImg'), UserConroller.create )
 
 
 module.exports = router;
