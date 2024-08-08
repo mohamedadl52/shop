@@ -30,10 +30,10 @@ var upload = multer({
 });
 
     router.get('/', UserConroller.getProduct )
-    router.put('/updateProduct/:id', upload.single('fileImg') , UserConroller.updateProduct )
+    router.put('/updateProduct/:id', upload.array('fileImg', 5) , UserConroller.updateProduct )
     router.get('/:id', UserConroller.getOneProduct )
     router.delete('/:id', UserConroller.deleteOneProduct )
-    router.post('/',upload.single('fileImg'), UserConroller.create )
+    router.post('/',upload.array('fileImg', 5), UserConroller.create )
 
 
 module.exports = router;
