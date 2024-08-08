@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index",
-    "client-start": "cd client & npm run dev"
+    "start": "node server/index"
   },
   "repository": {
     "type": "git",
