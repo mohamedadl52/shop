@@ -8,7 +8,14 @@ const cloudinary = require('cloudinary').v2
 var axios = require("axios").default;
 var catogress  =  require('../config/control.catogress')
 // var ImageKit = require("imagekit");
-
+cloudinary.config({ 
+                            
+                        cloud_name: 'dekh1kgki', 
+                       api_key: '719669252214716', 
+                        api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
+                      secure: true
+                       })
+                        
 // let imageKit = new ImageKit({
 //   publicKey : "public_hZ/JvPqU+rs3EP/MZhS9NTXbey8=",
 //   privateKey : "private_88hk+hLT8plIFeicsVF8aryjbhc=",
@@ -85,14 +92,7 @@ exports.create = (req, res) => {
               
               .then(()=>{
                 
-              //  cloudinary.config({ 
-                            
-                     //     cloud_name: 'dekh1kgki', 
-                    //      api_key: '719669252214716', 
-                      //    api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
-                 //         secure: true
-                   //     })
-                        
+               
                         
                         // imageKit.url({
                         //   path : req.file.path,
@@ -112,7 +112,7 @@ exports.create = (req, res) => {
       //   if(error) console.log(error);
       //   else console.log(result);
       // });
-                  //      cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+                      cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
                         
     }).then(data => {
 
