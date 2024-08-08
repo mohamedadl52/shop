@@ -64,9 +64,12 @@ const products =  Product.findById(req.params.id , function (err, doc) {
 }
 exports.create = (req, res) => {
     console.log(req.files)
+  const imgUrls = req.files.map(file => {
+            return file.filename; // Assuming Multer saves the files in the 'path' property
+        });
     const ProductrData = new Product({
       title :     req.body.title ,
-      img_url :   req.file.filename ,
+      img_url :   imgUrls ,
       price :     req.body.price , 
       catogres : req.body.catogres , 
       description : req.body.description , 
@@ -112,7 +115,11 @@ exports.create = (req, res) => {
       //   if(error) console.log(error);
       //   else console.log(result);
       // });
-                      cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+                req.files.map(file => {
+            return cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
+                  
+               });
+                      
                         
     }).then(data => {
 
