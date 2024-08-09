@@ -149,7 +149,9 @@ exports.deleteOneProduct = (req,res)=>{
 
 exports.updateProduct = (req,res)=>{
 
-console.log(req.body)
+  const imgUrls = req.files.map(file => {
+    return file.filename; // Assuming Multer saves the files in the 'path' property
+});
 
 return Product.findByIdAndUpdate(req.params.id, {
 
@@ -157,7 +159,7 @@ return Product.findByIdAndUpdate(req.params.id, {
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : req.file.filename ,
+  img_url : imgUrls ,
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -166,7 +168,7 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.title = req.body.title  
     product.description = req.body.description  
     product.qyt = req.body.qyt  
-    product.img_url =   req.file.filename 
+    product.img_url =   imgUrls 
     product.catogres =   req.body.catogres 
    
     
@@ -178,8 +180,10 @@ return Product.findByIdAndUpdate(req.params.id, {
       secure: true
     })
     
-    cloudinary.uploader.upload(req.file.path , {public_id : req.file.filename} , function(error, result) {console.log(result, error)});
-    
+    req.files.map(file => {
+      return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
+            
+         });
     res.json(product)
   
   }).catch(err=>{
