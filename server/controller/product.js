@@ -179,7 +179,7 @@ return Product.findByIdAndUpdate(req.params.id, {
       api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
       secure: true
     })
-    if() {
+    if(req.files) {
 req.files.map(file => {
       return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
             
