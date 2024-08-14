@@ -64,9 +64,7 @@ const products =  Product.findById(req.params.id , function (err, doc) {
 }
 exports.create = (req, res) => {
     console.log(req.files)
-  const imgUrls = req.files.map(file => {
-            return file.filename; // Assuming Multer saves the files in the 'path' property
-        });
+  
     const ProductrData = new Product({
       title :     req.body.title ,
       img_url :   imgUrls ,
@@ -148,10 +146,12 @@ exports.deleteOneProduct = (req,res)=>{
 }
 
 exports.updateProduct = (req,res)=>{
-
+if(req.files) {
   const imgUrls = req.files.map(file => {
     return file.filename; // Assuming Multer saves the files in the 'path' property
 });
+} 
+  
 
 return Product.findByIdAndUpdate(req.params.id, {
 
@@ -159,7 +159,7 @@ return Product.findByIdAndUpdate(req.params.id, {
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : imgUrls ,
+  img_url : imgUrls || req.body.files,
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -179,11 +179,14 @@ return Product.findByIdAndUpdate(req.params.id, {
       api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
       secure: true
     })
-    
-    req.files.map(file => {
+    if() {
+req.files.map(file => {
       return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
             
          });
+      
+    } 
+    
     res.json(product)
   
   }).catch(err=>{
