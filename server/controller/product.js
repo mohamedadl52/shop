@@ -159,7 +159,7 @@ return Product.findByIdAndUpdate(req.params.id, {
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : imgUrls || req.body.files,
+  img_url : if (imgUrls) return imgUrls || req.body.files,
   catogres : req.body.catogres 
 
   }).then((product)=>{
