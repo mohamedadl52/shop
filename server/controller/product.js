@@ -149,13 +149,16 @@ exports.deleteOneProduct = (req,res)=>{
 
 exports.updateProduct = (req,res)=>{
 if(req.files === [] ) {
+  console.log('body no file', req.body) 
   
 return Product.findByIdAndUpdate(req.params.id, {
 
   price : req.body.price , 
   title : req.body.title  ,   
+  img_url :   req.body.files,
   description : req.body.description, 
   qyt : req.body.qyt   , 
+  
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -163,16 +166,13 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.price = req.body.price 
     product.title = req.body.title  
     product.description = req.body.description  
+    Product.img_url =   req.body.files
     product.qyt = req.body.qyt  
-     product.catogres =   req.body.catogres 
+    product.catogres =   req.body.catogres 
    
     
     
-    if(req.files) {
-req.files.map(file => {
-      return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
-            
-         });
+    
   
  } 
   
@@ -189,8 +189,8 @@ req.files.map(file => {
 // end rrr
 
  } else {
-console.log('rrrrresss', req.files) 
-  const imgUrls = req.files.map(file => {
+   console.log('body with file', req.body) 
+    const imgUrls = req.files.map(file => {
     return file.filename; // Assuming Multer saves the files in the 'path' property
 });
 
