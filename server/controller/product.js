@@ -148,7 +148,7 @@ exports.deleteOneProduct = (req,res)=>{
 }
 
 exports.updateProduct = (req,res)=>{
-if(req.files != [] ) {
+if(req.files != null ) {
   console.log('rrrrresss', req.files) 
   const imgUrls = req.files.map(file => {
     return file.filename; // Assuming Multer saves the files in the 'path' property
