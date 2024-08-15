@@ -150,15 +150,12 @@ exports.deleteOneProduct = (req,res)=>{
 exports.updateProduct = (req,res)=>{
 if(req.files === [] ) {
   
-   
-
 return Product.findByIdAndUpdate(req.params.id, {
 
   price : req.body.price , 
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : req.body.files ,
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -167,8 +164,7 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.title = req.body.title  
     product.description = req.body.description  
     product.qyt = req.body.qyt  
-    product.img_url =   imgUrls ?  imgUrls : req.body.files 
-    product.catogres =   req.body.catogres 
+     product.catogres =   req.body.catogres 
    
     
     
