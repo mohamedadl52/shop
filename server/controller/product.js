@@ -64,7 +64,9 @@ const products =  Product.findById(req.params.id , function (err, doc) {
 }
 exports.create = (req, res) => {
     console.log(req.files)
-  
+  const imgUrls = req.files.map(file => {
+    return file.filename; // Assuming Multer saves the files in the 'path' property
+});
     const ProductrData = new Product({
       title :     req.body.title ,
       img_url :   imgUrls ,
@@ -146,7 +148,7 @@ exports.deleteOneProduct = (req,res)=>{
 }
 
 exports.updateProduct = (req,res)=>{
-if(req.files) {
+if(req.files != [] ) {
   console.log('rrrrresss', req.files) 
   const imgUrls = req.files.map(file => {
     return file.filename; // Assuming Multer saves the files in the 'path' property
