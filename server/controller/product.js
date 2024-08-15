@@ -148,13 +148,9 @@ exports.deleteOneProduct = (req,res)=>{
 }
 
 exports.updateProduct = (req,res)=>{
-if(req.files !== [] ) {
-  console.log('rrrrresss', req.files) 
-  const imgUrls = req.files.map(file => {
-    return file.filename; // Assuming Multer saves the files in the 'path' property
-});
-} 
+if(req.files === [] ) {
   
+   
 
 return Product.findByIdAndUpdate(req.params.id, {
 
@@ -162,7 +158,7 @@ return Product.findByIdAndUpdate(req.params.id, {
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : imgUrls ?  imgUrls : req.body.files ,
+  img_url : req.body.files ,
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -175,30 +171,73 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.catogres =   req.body.catogres 
    
     
-    cloudinary.config({ 
-                            
-      cloud_name: 'dekh1kgki', 
-      api_key: '719669252214716', 
-      api_secret: '2kArDtlF1XjteFo3PX0YsnjVTCo'  ,
-      secure: true
-    })
+    
     if(req.files) {
 req.files.map(file => {
       return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
             
          });
-      
-    } 
-    
-    res.json(product)
   
-  }).catch(err=>{
+ } 
+  
+ 
+      res.json(product)
+  
+}).catch(err=>{
+  
+    res.json(err)
+  
+  })
+
+
+// end rrr
+
+ } else {
+console.log('rrrrresss', req.files) 
+  const imgUrls = req.files.map(file => {
+    return file.filename; // Assuming Multer saves the files in the 'path' property
+});
+
+return Product.findByIdAndUpdate(req.params.id, {
+
+  price : req.body.price , 
+  title : req.body.title  ,   
+  description : req.body.description, 
+  qyt : req.body.qyt   , 
+  img_url : imgUrls ,
+  catogres : req.body.catogres 
+
+  }).then((product)=>{
+    
+    product.price = req.body.price 
+    product.title = req.body.title  
+    product.description = req.body.description  
+    product.qyt = req.body.qyt  
+    product.img_url =   imgUrls ?  imgUrls : req.body.files 
+    product.catogres =   req.body.catogres 
+   
+    
+    
+    if(req.files) {
+req.files.map(file => {
+      return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
+            
+         });
+  
+ } 
+  
+ 
+      res.json(product)
+  
+}).catch(err=>{
   
     res.json(err)
   
   })
 
 }
+
+
 
 exports.filterProduct  = (req, res)=>{
 
