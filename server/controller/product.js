@@ -147,108 +147,74 @@ exports.deleteOneProduct = (req,res)=>{
 
 }
 
-exports.updateProduct = (req,res)=>{
-if(req.files === [] ) {
-  console.log('body no file', req.body) 
-  
-return Product.findByIdAndUpdate(req.params.id, {
-
-  price : req.body.price , 
-  title : req.body.title  ,   
-  img_url :   req.body.files,
-  description : req.body.description, 
-  qyt : req.body.qyt   , 
-  
-  catogres : req.body.catogres 
-
-  }).then((product)=>{
-    
-    product.price = req.body.price 
-    product.title = req.body.title  
-    product.description = req.body.description  
-    Product.img_url =   req.body.files
-    product.qyt = req.body.qyt  
-    product.catogres =   req.body.catogres 
-   
-    
-    
-    
-  
- 
-  
- 
-      res.json(product)
-  
-}).catch(err=>{
-  
-    res.json(err)
-  
-  })
 
 
-// end rrr
+exports.updateProduct = (req, res) => {
+  if (req.files === []) {
+    console.log('body no file', req.body);
 
- } else {
-   console.log('body with file', req.body) 
+    return Product.findByIdAndUpdate(req.params.id, {
+      price: req.body.price,
+      title: req.body.title,
+      img_url: req.body.files,
+      description: req.body.description,
+      qyt: req.body.qyt,
+      catogres: req.body.catogres
+    }).then((product) => {
+      product.price = req.body.price;
+      product.title = req.body.title;
+      product.description = req.body.description;
+      product.img_url = req.body.files;
+      product.qyt = req.body.qyt;
+      product.catogres = req.body.catogres;
+      res.json(product);
+    }).catch(err => {
+      res.json(err);
+    });
+  } else {
+    console.log('body with file', req.body);
     const imgUrls = req.files.map(file => {
-    return file.filename; // Assuming Multer saves the files in the 'path' property
-});
+      return file.filename; // Assuming Multer saves the files in the 'path' property
+    });
 
-return Product.findByIdAndUpdate(req.params.id, {
+    return Product.findByIdAndUpdate(req.params.id, {
+      price: req.body.price,
+      title: req.body.title,
+      description: req.body.description,
+      qyt: req.body.qyt,
+      img_url: imgUrls,
+      catogres: req.body.catogres
+    }).then((product) => {
+      product.price = req.body.price;
+      product.title = req.body.title;
+      product.description = req.body.description;
+      product.qyt = req.body.qyt;
+      product.img_url = imgUrls ? imgUrls : req.body.files;
+      product.catogres = req.body.catogres;
 
-  price : req.body.price , 
-  title : req.body.title  ,   
-  description : req.body.description, 
-  qyt : req.body.qyt   , 
-  img_url : imgUrls ,
-  catogres : req.body.catogres 
+      if (req.files) {
+        req.files.map(file => {
+          return cloudinary.uploader.upload(file.path, { public_id: file.filename }, function (error, result) {
+            console.log(result, error);
+          });
+        });
+      }
 
-  }).then((product)=>{
-    
-    product.price = req.body.price 
-    product.title = req.body.title  
-    product.description = req.body.description  
-    product.qyt = req.body.qyt  
-    product.img_url =   imgUrls ?  imgUrls : req.body.files 
-    product.catogres =   req.body.catogres 
-   
-    
-    
-    if(req.files) {
-req.files.map(file => {
-      return cloudinary.uploader.upload(file.path , {public_id : file.filename} , function(error, result) {console.log(result, error)});
-            
-         });
-  
- } 
-  
- 
-      res.json(product)
-  
-}).catch(err=>{
-  
-    res.json(err)
-  
-  })
+      res.json(product);
+    }).catch(err => {
+      res.json(err);
+    });
+  }
+}; // Add missing bracket
 
-}
- 
+exports.filterProduct = (req, res) => {
+  const filterProduct = async () => {
+    const cat = await catogresss.findOne({ type: req.body.catogry });
+    let prro = await Product.find({ catogres: cat._id });
+    return prro;
+  };
 
-
-
-exports.filterProduct  = (req, res)=>{
-
-  const filterProduct = async ()=>{
-
-  const cat = await catogresss.findOne({type :req.body.catogry})
-  //  console.log(cat._id)
-   let prro = await Product.find({catogres : cat._id})
-
-   return prro
-  
-}
-filterProduct().then(pro=>{
-  console.log(pro)
-})
-
-}
+  filterProduct().then(pro => {
+    console.log(pro);
+  });
+}; // Add missing bracket
