@@ -174,7 +174,7 @@ return Product.findByIdAndUpdate(req.params.id, {
     
     
   
- } 
+ 
   
  
       res.json(product)
