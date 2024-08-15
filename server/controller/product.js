@@ -232,8 +232,7 @@ req.files.map(file => {
   })
 
 }
- }
-} 
+ 
 
 
 
