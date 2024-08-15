@@ -159,7 +159,7 @@ return Product.findByIdAndUpdate(req.params.id, {
   title : req.body.title  ,   
   description : req.body.description, 
   qyt : req.body.qyt   , 
-  img_url : if (imgUrls) {return imgUrls} else { return req.body.files)} ,
+  img_url : imgUrls ?  imgUrls : req.body.files ,
   catogres : req.body.catogres 
 
   }).then((product)=>{
@@ -168,7 +168,7 @@ return Product.findByIdAndUpdate(req.params.id, {
     product.title = req.body.title  
     product.description = req.body.description  
     product.qyt = req.body.qyt  
-    product.img_url =   imgUrls 
+    product.img_url =   imgUrls ?  imgUrls : req.body.files 
     product.catogres =   req.body.catogres 
    
     
