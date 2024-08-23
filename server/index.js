@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config')
+let visitorCount = 0;
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -25,6 +26,17 @@ app.use(function (req, res, next) {
 app.get("/", (req , res) =>{
    res.send('ghjfghyfgh')
 } )
+
+app.post('/incrementCount', (req, res) => {
+  visitorCount++;
+  res.json({ success: true });
+});
+
+app.get('/visitorCount', (req, res) => {
+  res.json({ count: visitorCount });
+});
+
+
 mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
 // mongoose.connect(`mongodb://localhost:27017/test2`, {
   
