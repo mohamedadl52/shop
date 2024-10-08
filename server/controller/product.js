@@ -150,63 +150,60 @@ exports.deleteOneProduct = (req,res)=>{
 
 
 exports.updateProduct = (req, res) => {
-  if (req.files === []) {
-    console.log('body no file', req.body);
+  if (!req.files || req.files.length === 0) {
+    console.log('No new files in the request', req.body);
 
-    return Product.findByIdAndUpdate(req.params.id, {
-      price: req.body.price,
-      title: req.body.title,
-      img_url: req.body.files,
-      description: req.body.description,
-      qyt: req.body.qyt,
-      catogres: req.body.catogres
-    }).then((product) => {
-      product.price = req.body.price;
-      product.title = req.body.title;
-      product.description = req.body.description;
-      product.img_url = req.body.files;
-      product.qyt = req.body.qyt;
-      product.catogres = req.body.catogres;
-      res.json(product);
-    }).catch(err => {
-      res.json(err);
-    });
+    Product.findById(req.params.id)
+      .then((product) => {
+        product.price = req.body.price;
+        product.title = req.body.title;
+        product.description = req.body.description;
+        product.qyt = req.body.qyt;
+        product.catogres = req.body.catogres;
+
+        return product.save();
+      })
+      .then((updatedProduct) => {
+        res.json(updatedProduct);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   } else {
-    console.log('body with file', req.body);
-    const imgUrls = req.files.map(file => {
+    console.log('New files included in the request', req.body);
+    const imgUrls = req.files.map((file) => {
       return file.filename; // Assuming Multer saves the files in the 'path' property
     });
 
-    return Product.findByIdAndUpdate(req.params.id, {
-      price: req.body.price,
-      title: req.body.title,
-      description: req.body.description,
-      qyt: req.body.qyt,
-      img_url: imgUrls,
-      catogres: req.body.catogres
-    }).then((product) => {
-      product.price = req.body.price;
-      product.title = req.body.title;
-      product.description = req.body.description;
-      product.qyt = req.body.qyt;
-      product.img_url = imgUrls ? imgUrls : req.body.files;
-      product.catogres = req.body.catogres;
+    Product.findById(req.params.id)
+      .then((product) => {
+        product.price = req.body.price;
+        product.title = req.body.title;
+        product.description = req.body.description;
+        product.qyt = req.body.qyt;
+        product.catogres = req.body.catogres;
+        product.img_url = imgUrls;
 
-      if (req.files) {
-        req.files.map(file => {
-          return cloudinary.uploader.upload(file.path, { public_id: file.filename }, function (error, result) {
-            console.log(result, error);
-          });
+        return product.save();
+      })
+      .then((updatedProduct) => {
+        // Upload new images to Cloudinary
+        req.files.map((file) => {
+          return cloudinary.uploader.upload(
+            file.path,
+            { public_id: file.filename },
+            function (error, result) {
+              console.log(result, error);
+            }
+          );
         });
-      }
-
-      res.json(product);
-    }).catch(err => {
-      res.json(err);
-    });
+        res.json(updatedProduct);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   }
-}; // Add missing bracket
-
+};
 exports.filterProduct = (req, res) => {
   const filterProduct = async () => {
     const cat = await catogresss.findOne({ type: req.body.catogry });
