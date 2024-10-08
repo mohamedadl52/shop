@@ -3,7 +3,11 @@ const mongoose = require('mongoose')
 
 const ProductEscema = new mongoose.Schema({
     title : String  , 
-    img_url :[String]  , 
+    img_url :{
+     type:  [String], 
+     required : false
+             
+             } , 
     price : Number , 
     qyt : {
         type : Number , 
