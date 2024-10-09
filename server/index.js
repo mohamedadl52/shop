@@ -27,7 +27,7 @@ app.get("/", (req , res) =>{
    res.send('ghjfghyfgh')
 } )
 
-app.post('/incrementCount', (req, res) => {
+/* app.post('/incrementCount', (req, res) => {
   visitorCount++;
   res.json({ success: true });
 });
@@ -35,8 +35,21 @@ app.post('/incrementCount', (req, res) => {
 app.get('/visitorCount', (req, res) => {
   res.json({ count: visitorCount });
 });
+*/
+app.post('/incrementCount', (req, res) => {
+  visitorCount++;
+  res.cookie('visitorCount', visitorCount, { maxAge: 900000, httpOnly: true });
+  res.json({ success: true });
+});
 
-
+app.get('/visitorCount', (req, res) => {
+  let storedVisitorCount = req.cookies.visitorCount;
+  if (!storedVisitorCount) {
+    res.json({ count: 0 });
+  } else {
+    res.json({ count: storedVisitorCount });
+  }
+});
 mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
 // mongoose.connect(`mongodb://localhost:27017/test2`, {
   
