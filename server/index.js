@@ -37,32 +37,34 @@ app.get('/visitorCount', (req, res) => {
 });
 */
 app.post('/incrementCount', (req, res) => {
-  visitorCount++;
-  res.cookie('visitorCount', visitorCount, { maxAge: 900000, httpOnly: true });
-  res.json({ success: true });
-});
+const Visitor = require('./models/visitor'); // استيراد موديل الزائر
 
-app.get('/visitorCount', (req, res) => {
-  let storedVisitorCount = req.cookies.visitorCount;
-  if (!storedVisitorCount) {
-    res.json({ count: 0 });
-  } else {
-    res.json({ count: storedVisitorCount });
+app.post('/incrementCount', async (req, res) => {
+  try {
+    let visitor = await Visitor.findOne();
+    if (!visitor) {
+      visitor = new Visitor({ count: 1 });
+    } else {
+      visitor.count++;
+    }
+    await visitor.save();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to increment visitor count' });
   }
 });
-mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
-// mongoose.connect(`mongodb://localhost:27017/test2`, {
-  
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Successfully connect to MongoDB");
-  initial()
-})
 
-.catch(err => {
-  console.error("Connection error", err);
-  process.exit();
+app.get('/visitorCount', async (req, res) => {
+  try {
+    let visitor = await Visitor.findOne();
+    if (!visitor) {
+      res.json({ count: 0 });
+    } else {
+      res.json({ count: visitor.count });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to retrieve visitor count' });
+  }
 });
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
