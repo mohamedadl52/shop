@@ -36,8 +36,8 @@ app.get('/visitorCount', (req, res) => {
   res.json({ count: visitorCount });
 });
 */
-app.post('/incrementCount', (req, res) => {
-const Visitor = require('./models/visitor'); // استيراد موديل الزائر
+
+const Visitor = require('./models/Visitor'); // استيراد موديل الزائر
 
 app.post('/incrementCount', async (req, res) => {
   try {
