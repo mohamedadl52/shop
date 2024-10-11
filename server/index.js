@@ -47,11 +47,14 @@ app.get('/visitorCount', async (req, res) => {
   try {
     let visitor = await Visitor.findOne();
     if (!visitor) {
-      res.json({ count: 0 });
+      console.log('not found')
+      res.json({ count: 000 });
     } else {
+      console.log(' found and number : ', visitor.count)
       res.json({ count: visitor.count });
     }
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: 'Failed to retrieve visitor count' });
   }
 });
