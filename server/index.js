@@ -1,6 +1,4 @@
 const express = require("express");
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const cors = require("cors");
 const db = require('./models');
@@ -9,9 +7,6 @@ const dbConfig = require('./config/db.config');
 const Visitor = require('./models/Visitor');
 
 const app = express();
-
-app.use(cookieParser());
-
 
 let visitorCount = 0;
 
@@ -61,12 +56,12 @@ app.get('/visitorCount', async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
+/* app.get("/", (req, res) => {
   let visitorCountSession = req.session.visitorCount || 0;
   visitorCountSession++;
   req.session.visitorCount = visitorCountSession;
   res.send(`عدد الزيارات: ${visitorCountSession}`);
-});
+}); */
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
