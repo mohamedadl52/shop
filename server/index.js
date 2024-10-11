@@ -11,12 +11,7 @@ const Visitor = require('./models/Visitor');
 const app = express();
 
 app.use(cookieParser());
-app.use(session({
-  secret: 'secretKey',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 3600000 }
-}));
+
 
 let visitorCount = 0;
 
