@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config')
-let visitorCount = 0;
+
 
 // parse requests of content-type - application/json
 app.use(express.json());
