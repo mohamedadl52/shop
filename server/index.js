@@ -41,7 +41,7 @@ app.get("/", (req , res) =>{
    res.send('ghjfghyfgh')
 } )
 
-/* app.post('/incrementCount', (req, res) => {
+
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
