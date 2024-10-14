@@ -1,32 +1,57 @@
-const express = require("express");
-const mongoose = require("mongoose");
+const express = require("express")
+const app = express()
 const cors = require("cors");
+const mongoose = require("mongoose")
 const db = require('./models');
 const Role = db.role;
-const dbConfig = require('./config/db.config');
-const Visitor = require('./models/Visitor');
-
-const app = express();
-
+const dbConfig = require('./config/db.config')
 let visitorCount = 0;
 
-app.use(cors());
+// parse requests of content-type - application/json
+app.use(express.json());
 
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cors())
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
-  next();
+  
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token Origin, Content-Type, Accept"
+    )
+  
+    next()
 });
-
 mongoose.connect(`mongodb+srv://hamodyadl52:mhmd@cluster0.bj4sx.mongodb.net/test`, {
+// mongoose.connect(`mongodb://localhost:27017/test2`, {
+
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
   console.log("Successfully connect to MongoDB");
-  initial();
-}).catch(err => {
+  initial()
+})
+
+.catch(err => {
   console.error("Connection error", err);
   process.exit();
 });
+app.get("/", (req , res) =>{
+   res.send('ghjfghyfgh')
+} )
+
+/* app.post('/incrementCount', (req, res) => {
+  visitorCount++;
+  res.json({ success: true });
+});
+
+app.get('/visitorCount', (req, res) => {
+  res.json({ count: visitorCount });
+});
+*/
+
+const Visitor = require('./models/Visitor'); // استيراد موديل الزائر
 
 app.post('/incrementCount', async (req, res) => {
   try {
@@ -47,51 +72,78 @@ app.get('/visitorCount', async (req, res) => {
   try {
     let visitor = await Visitor.findOne();
     if (!visitor) {
-      console.log('not found')
-      res.json({ count: 000 });
+      res.json({ count: 0 });
     } else {
-      console.log(' found and number : ', visitor.count)
       res.json({ count: visitor.count });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({ error: 'Failed to retrieve visitor count' });
   }
 });
-
-/* app.get("/", (req, res) => {
-  let visitorCountSession = req.session.visitorCount || 0;
-  visitorCountSession++;
-  req.session.visitorCount = visitorCountSession;
-  res.send(`عدد الزيارات: ${visitorCountSession}`);
-}); */
-
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
-      new Role({ name: "user" }).save(err => {
-        if (err) console.log("error", err);
+      new Role({
+        name: "user"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
         console.log("added 'user' to roles collection");
       });
 
-      new Role({ name: "moderator" }).save(err => {
-        if (err) console.log("error", err);
+      new Role({
+        name: "moderator"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
         console.log("added 'moderator' to roles collection");
       });
 
-      new Role({ name: "admin" }).save(err => {
-        if (err) console.log("error", err);
-        console.log("added 'admin' to roles collection");
+      new Role({
+        name: "admin"
+       }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }   
+       console.log("added 'admin' to roles collection");
       });
     }
   });
 }
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/public/'));
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html')) ;
+   
+   
+
+   
+
+
+app.use('/api/product', require("./routes/product"))
+app.use('/api/user', require("./routes/user"))
+app.use('/api/catogress', require("./routes/catogress"))
+app.use('/api/address', require("./routes/address"))
+app.use('/api/order', require("./routes/order"))
+     if(process.env.NODE_ENV === 'production'){
+app.use(express.static(__dirname +  '/public/'))
+app.get(/.*/ , (req, res) => res.sendFile(__dirname + '/public/index.html') )
+
 }
 
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+//   socket.on('msg' , (msg)=>{
+//     console.log('msg : ' , msg)
+//   })
+//   socket.emit('msg2' , 'hello from server')
+// });
+
+// set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
