@@ -42,44 +42,7 @@ app.get("/", (req , res) =>{
 } )
 
 /* app.post('/incrementCount', (req, res) => {
-  visitorCount++;
-  res.json({ success: true });
-});
 
-app.get('/visitorCount', (req, res) => {
-  res.json({ count: visitorCount });
-});
-*/
-
-const Visitor = require('./models/Visitor'); // استيراد موديل الزائر
-
-app.post('/incrementCount', async (req, res) => {
-  try {
-    let visitor = await Visitor.findOne();
-    if (!visitor) {
-      visitor = new Visitor({ count: 1 });
-    } else {
-      visitor.count++;
-    }
-    await visitor.save();
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to increment visitor count' });
-  }
-});
-
-app.get('/visitorCount', async (req, res) => {
-  try {
-    let visitor = await Visitor.findOne();
-    if (!visitor) {
-      res.json({ count: 0 });
-    } else {
-      res.json({ count: visitor.count });
-    }
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve visitor count' });
-  }
-});
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
